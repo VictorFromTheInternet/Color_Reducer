@@ -7,12 +7,11 @@
     --primary-color: rgba(60,60,60,1);
     --secondary-color: #2ecc71;
     --background-color: #f4f4f4;
-    /* --main-background-color: radial-gradient(
-        90deg,           
-        hsla(234, 70%, 59%, .1),
-        hsla(0, 0%, 100%, 0.1),
-        hsla(309, 53%, 48%, .1)
-        );  */
+    --nav-background: linear-gradient(
+        175deg,           
+        var(--rebecca-purple),
+        var(--accent-color-pink)
+        );
     --main-background-color: radial-gradient(
         hsla(0, 0%, 100%, 0.1),
         hsla(234, 70%, 59%, 0.13),
@@ -34,6 +33,7 @@ html,body {
     color: var(--text-color);
 
     background: var(--main-background-color);   
+    min-height: 100vh;
 }
 
 /* header and nav */
@@ -45,11 +45,7 @@ header{
     padding: 1rem;
 }
 nav{
-    background: linear-gradient(
-        175deg,           
-        var(--rebecca-purple),
-        var(--accent-color-pink)
-        );    
+    background: var(--nav-background);    
     background-color: var(--rebecca-purple);
 
     box-shadow: var(--box-shadow);
@@ -84,7 +80,18 @@ nav li a{
 
 /* main */
 main{
-    min-height: 100vh;
+    min-height: 70vh;
+}
+
+/* section */
+section{
+    padding: 2rem;
+    margin: 1rem auto;
+    width: 800px;    
+    background-color: var(--background-color);
+    box-shadow: var(--box-shadow);
+    border-radius: 1rem;
+    border: 2px solid rgba(100,100,100,.5)
 }
 
 /* footer */
