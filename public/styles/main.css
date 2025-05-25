@@ -1,0 +1,101 @@
+:root{
+    --accent-color-pink: hsla(309, 53%, 48%, 0.475);
+    --accent-color-blue: hsl(234, 70%, 59%);
+    --rebecca-purple: hsl(270, 60%, 15%);
+    
+    
+    --primary-color: rgba(60,60,60,1);
+    --secondary-color: #2ecc71;
+    --background-color: #f4f4f4;
+    /* --main-background-color: radial-gradient(
+        90deg,           
+        hsla(234, 70%, 59%, .1),
+        hsla(0, 0%, 100%, 0.1),
+        hsla(309, 53%, 48%, .1)
+        );  */
+    --main-background-color: radial-gradient(
+        hsla(0, 0%, 100%, 0.1),
+        hsla(234, 70%, 59%, 0.13),
+        hsla(309, 53%, 48%, 0.13)
+        );
+
+    --box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 12px;
+    
+    --text-color: #333;
+    --font-family: 'Arial', sans-serif;
+}
+html,body {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+    font-family: var(--font-family);
+    /* background-color: var(--background-color); */
+    color: var(--text-color);
+
+    background: var(--main-background-color);   
+}
+
+/* header and nav */
+header{
+    /* background-color: var(--primary-color); */    
+    color: white;    
+    text-align: center;
+    
+    padding: 1rem;
+}
+nav{
+    background: linear-gradient(
+        175deg,           
+        var(--rebecca-purple),
+        var(--accent-color-pink)
+        );    
+    background-color: var(--rebecca-purple);
+
+    box-shadow: var(--box-shadow);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    border-radius: 1rem;    
+}
+nav .nav-title{
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1.25rem;
+    color: white;
+}
+nav ul{
+    padding: 0;
+    margin: 0;    
+    display: flex;
+    align-items: center;
+}
+nav li{
+    list-style: none;        
+}
+nav li a{
+    color: white;
+    text-decoration: none;
+    padding: 1.5rem;    
+    transition: background-color 0.3s ease;
+}
+
+/* main */
+main{
+    min-height: 100vh;
+}
+
+/* footer */
+footer{
+    bottom: 0;
+    width: 100%;
+
+    color: var(--text-color);
+    
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
