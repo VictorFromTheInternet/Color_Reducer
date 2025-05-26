@@ -8,10 +8,18 @@ document.getElementById("num-colors").addEventListener("input", ()=>{
     else if(numColors < numColorInputs)
         removeColorInputs(numColors)
 })
+
 function appendColorInputs(numColors){
+    // update label    
+    let label = document.getElementById('num-colors-range-label') 
+    label.innerText = `${numColors}`
+
+    // grab curr length & input and then add the diff ()
     let colorInputsList = document.querySelectorAll(".color-input")
     let currLen = colorInputsList.length
     console.log(colorInputsList)
+
+
     for(let i=currLen; i<numColors; i++){
         let tempElem = document.createElement("input");
         tempElem.type = "color"
@@ -24,6 +32,10 @@ function appendColorInputs(numColors){
     }
 }
 function removeColorInputs(numColors){
+
+    // update label
+    let label = document.getElementById('num-colors-range-label') 
+    label.innerText = `${numColors}`
 
     // grab curr length and then iterate backwards
     let colorInputsList = document.querySelectorAll(".color-input")

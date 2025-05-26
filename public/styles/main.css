@@ -45,6 +45,9 @@ header{
     text-align: center;
     
     padding: 1rem;
+    top: 0;
+    position: sticky;
+    z-index: 1000; /* Ensure header is above other content */
 }
 nav{
     background: var(--nav-background);    
@@ -69,6 +72,8 @@ nav ul{
     margin: 0;    
     display: flex;
     align-items: center;
+    gap: 1rem;
+    margin: 0 1rem;
 }
 nav li{
     list-style: none;        
@@ -76,24 +81,35 @@ nav li{
 nav li a{
     color: white;
     text-decoration: none;
-    padding: 1.5rem;    
-    transition: background-color 0.3s ease;
+    padding: 1rem;    
+    margin: .5rem 0;
+    transition: all 0.3s ease-out;
+}
+nav li a:hover{
+    
+    background-color: white;
+    /* border: var(--accent-color-pink) solid 2px; */
+    box-shadow: black 4px 8px 0px;
+    border-radius: 1rem;
+    color: var(--text-color);
 }
 
 /* main */
 main{
-    min-height: 70vh;
+    min-height: calc(100vh - 100px - 50px + 3rem); /* Adjust based on header and footer height */
+    overflow: hidden;
+    padding-bottom: 5rem; /* To prevent content from being hidden behind the footer */
 }
 
 /* section */
-section div[class~="main-card"]{
+div div[class~="main-card"]{
     padding: 2rem;
     margin: 1rem auto;
     width: 800px;    
     background-color: var(--background-color);
     box-shadow: var(--box-shadow);
     border-radius: 1rem;
-    border: 2px solid rgba(100,100,100,.5)
+    border: 2px solid rgba(100,100,100,.5);
 }
 
 .row-flex{
@@ -111,7 +127,7 @@ section div[class~="main-card"]{
     padding: 1rem;
     /* box-shadow: var(--box-shadow); */
     border: 2px solid rgba(100,100,100,.5);
-    border-radius: 1rem;
+    border-radius: .5rem;
     height: 100px;
 }
 
@@ -125,7 +141,7 @@ footer{
 
     color: var(--text-color);
     
-    position: relative;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -142,11 +158,11 @@ footer{
         display: none;
     }
     
-    section[class~="container"]{
+    div[class~="container"]{
         width: calc(100% - 2rem);
         margin: 1rem;
     }
-    section div[class~="main-card"]{
+    div div[class~="main-card"]{
         width: calc(100% - 4rem);        
     }
 }

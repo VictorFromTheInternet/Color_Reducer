@@ -7,6 +7,7 @@
 
     <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">    
     <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/inputs.css">
     <script src="./scripts/main.js" defer></script>
 </head>
 <body>
@@ -20,23 +21,22 @@
         </nav>
     </header>
     <main>
-        <section class="container">
+        <div class="container">
             <div class="main-card">
                 <h1>Color Reducer</h1>                                            
 
                 <div class="input-container">
-                    <label class="form-label" for="num-colors">Num Colors (1-20):</label><br>                        
-                    <span class="range-field">
-                        <p id="num-colors-range-label" class="range-field-label">1</p>
+                    <!-- input -->
+                    <label class="form-label" for="num-colors">Num Colors: <span id="num-colors-range-label">1</span> </label>                        
+                    <span class="range-field">                        
                         <input class="form-range" type="range" id="num-colors" name="num-colors" min="1" max="20" step="1" value="1"/> 
                     </span>
                     <div id="color-inputs-container">
                         <input type="color" class="color-input" id="colorInput0" name="color-0" value="#000000">
                     </div>
-                </div>
-                <div class="btn-reduce">
-                    <button>Reduce</button>
-                </div>
+                </div>                                            
+                
+                <!-- images -->
                 <div class="row-flex">
                     <div class="col span-6">
                         <p>Drag and drop an image to reduce its color palette.</p>
@@ -48,8 +48,13 @@
                         <div class="result" id="result"></div>
                     </div>                    
                 </div>
+
+                <!-- btn -->
+                <button class="btn">
+                    Reduce
+                 </button>
             </div>            
-        </section>
+        </div>
 
         
     </main>
