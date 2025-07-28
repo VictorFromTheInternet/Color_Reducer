@@ -8,7 +8,9 @@
     <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">    
     <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet" href="./styles/inputs.css">
+    
     <script src="./scripts/main.js" defer></script>
+    <script src="./scripts/colorInput.js" defer></script>
 </head>
 <body>
     <header>        
@@ -25,6 +27,7 @@
             <div class="main-card">
                 <h1>Color Reducer</h1>                                            
 
+                
                 <div class="input-container">
                     <!-- input -->
                     <label class="form-label" for="num-colors">Num Colors: <span id="num-colors-range-label">1</span> </label>                        
@@ -39,10 +42,11 @@
                 <!-- images -->
                 <div class="row-flex">
                     <div class="col span-6">
-                        <p>Drag and drop an image to reduce its color palette.</p>
+                        <!-- <p>Drag and drop an image to reduce its color palette.</p>
                         <div class="drop-zone" id="drop-zone">
                             <p>Drop your image here</p>
-                        </div>
+                        </div> -->
+                        <input type="file" id="file-input" accept="image/*" >
                     </div>
                     <div class="col span-6">
                         <div class="result" id="result"></div>

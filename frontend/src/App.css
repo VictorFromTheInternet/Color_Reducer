@@ -1,0 +1,8 @@
+html,body{
+  background: radial-gradient(
+        hsla(0, 0%, 100%, 0.1),
+        hsla(234, 70%, 59%, 0.13),
+        hsla(309, 53%, 48%, 0.13)
+        );
+}
+
