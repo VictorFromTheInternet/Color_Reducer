@@ -7,29 +7,39 @@ function App() {
 
   const [colorInputs, setColorInputs] = useState([])
   const [numColors, setNumColors] = useState(1)
+  const [fileInput, setFileInput]  = useState('')
   
 
-
+  // handle colors arr
   function handleRangeChange(e){
     setNumColors(e.target.value)
-    // console.log(e)
-    // console.log(numColors)
-
-    handleColorInputs(numColors)
+    handleColorInputs(e.target.value)
   }
 
-  // handle colors arr
   function handleColorInputs(n){
-    if(n > colorInputs.length){
+    console.log(n)
+    const diff = n-colorInputs.length
+    if(diff > 0){
       // push color
-      setColorInputs( [...colorInputs, "#000000"])
+      let tempArr = []
+      for(let i=0; i<diff; i++){
+        tempArr.push('#000000')
+      }    
+      
+      setColorInputs( [...colorInputs, ...tempArr])
 
     }else{
-      // pop color 
+      // pop color       
+      console.log(colorInputs.slice(0,n))
       setColorInputs(colorInputs.slice(0,n))
     }
   }
 
+  // handle file
+  function handleFileInput(e){
+    setFileInput(e.target.files)
+  }
+  
 
   // submit
   function handleSubmit(){
@@ -40,9 +50,12 @@ function App() {
   function handleGenerateImage(e){
     e.preventDefault()
 
-    colorInputs.forEach((elm)=>{
-      console.log(elm)
-    })
+    const formData = {
+      colors: colorInputs,
+      inputImage: fileInput
+    }
+
+    console.log(formData)
   }
 
   return (
@@ -54,11 +67,21 @@ function App() {
             <form action="">
 
               <div>
-                <label htmlFor="numColors" className="block">How many colors:</label>
-                <input type="range" id="numColors" min="1" max="10" onChange={handleRangeChange} value={numColors} />
+                <label htmlFor="numColors" className="block">How many colors (1-10):</label>
+                <div className="flex justify-between">
+                  <p>1</p>
+                  <p>10</p>
+                </div>
+                <div className="flex gap-3 justify-between">
+                  <input 
+                  type="range" id="numColors" min="1" max="10" onChange={handleRangeChange} value={numColors} 
+                  className="w-full"
+                  />
+                  <span>{numColors}</span>
+                </div>        
               </div>                         
 
-              <div>
+              <div className="mb-3">
                 {
                   colorInputs.map((elm, ind)=>{
                     return(
@@ -76,17 +99,24 @@ function App() {
                 }
               </div>
 
-              <div>
+              <div className="mb-4">
                 <label htmlFor="imageUpload" className="block">Upload an Image:</label>
                 <input 
-                  type="file" id="imageUpload" name="imageUpload" accept="image/png, image/jpg" 
-                  className="border-1 border-gray-300  rounded-md p-2 mb-3 cursor-pointer"
+                  type="file" id="imageUpload" name="imageUpload" accept="image/"  
+                  className="text-md 
+                      file:mr-5 file:py-1 file:px-3 file:border-[1px] file:rounded-md
+                      file:text-xs file:font-medium
+                      file:bg-stone-50
+                      hover:file:cursor-pointer hover:file:bg-blue-50
+                      hover:file:text-blue-500"
+                  
+                  onChange={(e)=>{ console.log(e.target.files); setFileInput(e.target.files)}}
                   />
               </div>
 
 
               <button 
-              className="text-blue-500 border-1 border-blue-500 py-2 px-4 rounded-xl cursor-pointer"
+              className="text-blue-500 border-1 border-blue-500 py-2 px-4 rounded-xl cursor-pointer hover:bg-blue-50"
               onClick={handleGenerateImage}> 
                 Reduce Image 
               </button>
