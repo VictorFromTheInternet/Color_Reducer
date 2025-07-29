@@ -47,7 +47,7 @@ function App() {
   }
 
   // generate image
-  function handleGenerateImage(e){
+  async function handleGenerateImage(e){
     e.preventDefault()
 
     const formData = {
@@ -55,7 +55,18 @@ function App() {
       inputImage: fileInput
     }
 
+    const url = `http://localhost:5000/color-reducer-api`
+    const response = await fetch(url)
+
+    if(!response.ok){
+      throw new Error(`HTTP Error: ${response.status}`)
+    }
+
+    const data = await response.json()
+
+
     console.log(formData)
+    console.log(data)
   }
 
   return (
