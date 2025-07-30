@@ -34,11 +34,7 @@ function App() {
       setColorInputs(colorInputs.slice(0,n))
     }
   }
-
-  // handle file
-  function handleFileInput(e){
-    setFileInput(e.target.files)
-  }
+  
   
 
   // submit
@@ -50,18 +46,26 @@ function App() {
   async function handleGenerateImage(e){
     e.preventDefault()
 
-    const formData = {
+    const formDataTemp = {
       colors: colorInputs,
       inputImage: fileInput
     }
+    const formData = new FormData()
+    
+    Object.entries(formDataTemp).forEach(([key,value], index)=>{
+      console.log(`${key} : ${value}`)
+      formData.append(key,value)
+    })
 
-    const url = `http://localhost:5000/color-reducer-api`
-    const response = await fetch(url)
-
-    if(!response.ok){
-      throw new Error(`HTTP Error: ${response.status}`)
+    const url = `http://localhost:5000/color-reducer-api/reduce-image`
+    const options = {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: formData
     }
-
+    const response = await fetch(url, options)    
     const data = await response.json()
 
 
@@ -121,7 +125,7 @@ function App() {
                       hover:file:cursor-pointer hover:file:bg-blue-50
                       hover:file:text-blue-500"
                   
-                  onChange={(e)=>{ console.log(e.target.files); setFileInput(e.target.files)}}
+                  onChange={(e)=>{ console.log(e.target.files[0]); setFileInput(e.target.files[0])}}
                   />
               </div>
 

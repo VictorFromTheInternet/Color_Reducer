@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import cors from 'cors'
 import colorReducerRouter from './routes/color_reducer_router.js'
 
+
 const app = express()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -16,6 +17,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }
+
 
 
 app.use(express.json())
