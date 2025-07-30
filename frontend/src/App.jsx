@@ -52,17 +52,16 @@ function App() {
     }
     const formData = new FormData()
     
-    Object.entries(formDataTemp).forEach(([key,value], index)=>{
-      console.log(`${key} : ${value}`)
-      formData.append(key,value)
-    })
+    // Object.entries(formDataTemp).forEach(([key,value], index)=>{
+    //   console.log(`${key} : ${value}`)
+    //   formData.append(key,value)
+    // })
+    formData.append('colors', JSON.stringify(colorInputs))
+    formData.append('inputImage', fileInput)
 
     const url = `http://localhost:5000/color-reducer-api/reduce-image`
     const options = {
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json'
-      },
+      method: 'POST',      
       body: formData
     }
     const response = await fetch(url, options)    
