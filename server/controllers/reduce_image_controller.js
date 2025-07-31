@@ -34,12 +34,15 @@ async function reduceImageController(req, res){
 
 
         // round values        
+        const colors = new Set(req.body.colors)
         for(let i=0; i<imageData.length/1000; i+=4){
             let R = imageData[i]
             let G = imageData[i+1]
             let B = imageData[i+2]
             let A = imageData[i+3]
             
+
+            console.log(closestColor(colors, R, G, B, A))
             console.log(`${R}, ${G}, ${B}, ${A}`)
         }
 
@@ -58,8 +61,6 @@ async function reduceImageController(req, res){
     
 }
 
-function closestColor(){
 
-}
 
 export default reduceImageController
