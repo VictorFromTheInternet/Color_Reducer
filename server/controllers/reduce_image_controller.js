@@ -1,3 +1,5 @@
+import {canvas, loadImage} from 'canvas'
+
 
 async function reduceImageController(req, res){
     console.log(req.body)
