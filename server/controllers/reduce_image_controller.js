@@ -1,21 +1,11 @@
 import fs from 'fs/promises'
 import {createCanvas, loadImage} from 'canvas'
-
-// const out = fs.createWriteStream(__dirname + '/test.jpeg')
-// const stream = canvas.createJPEGStream()
-// stream.pipe(out)
-// out.on('finish', () =>  console.log('The JPEG file was created.'))
-
-// const canvas = createCanvas(200, 200)
-// const ctx = canvas.getContext('2d')
+import {hexToRgb, closestColor} from './color_utility.js' 
 
 
 async function reduceImageController(req, res){
 
-    try{
-        console.log(req.body)
-        console.log(req.file)
-
+    try{        
         // init image
         const filePath = req.file.path
         const image = await loadImage(filePath)
@@ -34,25 +24,27 @@ async function reduceImageController(req, res){
 
 
         // round values        
-        const colors = new Set(req.body.colors)
-        for(let i=0; i<imageData.length/1000; i+=4){
+        const colors = req.body.colors.split(',')        
+        for(let i=0; i<imageData.length; i+=4){
             let R = imageData[i]
             let G = imageData[i+1]
             let B = imageData[i+2]
-            let A = imageData[i+3]
-            
+            let A = imageData[i+3]            
 
-            console.log(closestColor(colors, R, G, B, A))
-            console.log(`${R}, ${G}, ${B}, ${A}`)
+            const [newR, newG, newB, newA] = hexToRgb(closestColor(colors, R,G,B))            
+            
+            imageData[i] = newR
+            imageData[i+1] = newG
+            imageData[i+2] = newB
+            
+            // console.log(`${newR}, ${newG}, ${newB}, ${newA}`)
+            // console.log("Closest color:",closestColor(colors, R, G, B))            
         }
 
-        // console.log(imageData)
-
-        if(!req.body){
-            res.status(500).send({message:"req body missing"})
-        }else{
-            res.status(200).send({message: "file upload success"})
-        }        
+        // create or store new image, send to client
+        // console.log(imageData)        
+        res.status(200).send({"imageData": imageData})
+             
         
     }catch(err){
         console.error(err)

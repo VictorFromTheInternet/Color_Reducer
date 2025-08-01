@@ -46,6 +46,24 @@ function App() {
   async function handleGenerateImage(e){
     e.preventDefault()
 
+    // Check if form is valid using HTML5 validation
+    const form = e.target.closest('form')
+    if (!form.checkValidity()) {
+      form.reportValidity() // This will show validation messages
+      return
+    }
+
+    // Additional custom validation
+    if (!fileInput) {
+      alert('Please select an image file')
+      return
+    }
+
+    if (colorInputs.length === 0) {
+      alert('Please select at least one color')
+      return
+    }
+
     const formDataTemp = {
       colors: colorInputs,
       inputImage: fileInput
@@ -56,7 +74,7 @@ function App() {
     //   console.log(`${key} : ${value}`)
     //   formData.append(key,value)
     // })
-    formData.append('colors', JSON.stringify(colorInputs))
+    formData.append('colors', colorInputs)
     formData.append('inputImage', fileInput)
 
     const url = `http://localhost:5000/color-reducer-api/reduce-image`
@@ -88,7 +106,7 @@ function App() {
                 </div>
                 <div className="flex gap-3 justify-between">
                   <input 
-                  type="range" id="numColors" min="1" max="10" onChange={handleRangeChange} value={numColors} 
+                  type="range" id="numColors" min="1" max="10" onChange={handleRangeChange} value={numColors} required
                   className="w-full"
                   />
                   <span>{numColors}</span>
@@ -116,7 +134,7 @@ function App() {
               <div className="mb-4">
                 <label htmlFor="imageUpload" className="block">Upload an Image:</label>
                 <input 
-                  type="file" id="imageUpload" name="imageUpload" accept="image/"  
+                  type="file" id="imageUpload" name="imageUpload" accept="image/jpeg"  required
                   className="text-md 
                       file:mr-5 file:py-1 file:px-3 file:border-[1px] file:rounded-md
                       file:text-xs file:font-medium
