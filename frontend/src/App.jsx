@@ -92,10 +92,10 @@ function App() {
 
   return (
     <>
-      <h1>Color Reducer!</h1>
+      {/* <h1>Color Reducer!</h1> */}
 
-      <div className="main-container  max-w-lg ml-auto mr-auto min-h-screen">
-          <div className="p-4 rounded-xl bg-white">
+      <div className="main-container  max-w-lg ml-auto mr-auto min-h-screen flex flex-col justify-center items-center">
+          <div className="p-4 rounded-xl bg-white min-w-full">
             <form action="">
 
               <div>
@@ -146,6 +146,12 @@ function App() {
                   />
               </div>
 
+              {
+                fileInput &&
+                <div className="bg-gray-200 my-4 overflow-x-auto overflow-y-auto max-h-sm">
+                  <canvas id="canvas" width={fileInput.width} height={fileInput.height}></canvas>
+                </div>
+              }
 
               <button 
               className="text-blue-500 border-1 border-blue-500 py-2 px-4 rounded-xl cursor-pointer hover:bg-blue-50"
