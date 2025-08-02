@@ -89,15 +89,8 @@ function App() {
       const data = await response.json()       
       let imageData = new Uint8ClampedArray(data.imageData.data)
 
-      console.log(typeof imageData)     
-      console.log(imageData)
-      // let imageArray = new Uint8ClampedArray(data.imageData.length)
-      // data.imageData.forEach((elm, ind) => imageArray[ind] = elm)
-      // console.log(imageArray)
-      // const imageArray = new Uint8ClampedArray(data.imageData)
-      // console.log(typeof imageArray)
-      // console.log(imageArray)
-      // setProcessedImageData(data.imageData)
+      // console.log(typeof imageData)     
+      // console.log(imageData)      
 
       // Draw the processed image on canvas
       drawImageOnCanvas(imageData, data.width, data.height)
