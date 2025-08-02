@@ -80,7 +80,7 @@ function App() {
     formData.append('inputImage', fileInput)
 
     try{
-      const url = `http://localhost:5000/color-reducer-api/reduce-image`
+      const url = `https://color-reducer-server.onrender.com/color-reducer-api/reduce-image`
       const options = {
         method: 'POST',      
         body: formData
