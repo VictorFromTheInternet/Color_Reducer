@@ -8,6 +8,8 @@ function App() {
   const [colorInputs, setColorInputs] = useState([])
   const [numColors, setNumColors] = useState(1)
   const [fileInput, setFileInput]  = useState('')
+  const [processedImageData, setProcessedImageData] = useState()
+  const canvasRef = useRef()
   
 
   // handle colors arr
@@ -77,18 +79,55 @@ function App() {
     formData.append('colors', colorInputs)
     formData.append('inputImage', fileInput)
 
-    const url = `http://localhost:5000/color-reducer-api/reduce-image`
-    const options = {
-      method: 'POST',      
-      body: formData
+    try{
+      const url = `http://localhost:5000/color-reducer-api/reduce-image`
+      const options = {
+        method: 'POST',      
+        body: formData
+      }
+      const response = await fetch(url, options)    
+      const data = await response.json()       
+      let imageData = new Uint8ClampedArray(data.imageData.data)
+
+      console.log(typeof imageData)     
+      console.log(imageData)
+      // let imageArray = new Uint8ClampedArray(data.imageData.length)
+      // data.imageData.forEach((elm, ind) => imageArray[ind] = elm)
+      // console.log(imageArray)
+      // const imageArray = new Uint8ClampedArray(data.imageData)
+      // console.log(typeof imageArray)
+      // console.log(imageArray)
+      // setProcessedImageData(data.imageData)
+
+      // Draw the processed image on canvas
+      drawImageOnCanvas(imageData, data.width, data.height)
+    }catch(err){
+      console.error(err)
     }
-    const response = await fetch(url, options)    
-    const data = await response.json()
 
 
-    console.log(formData)
-    console.log(data)
+    // console.log(formData)
+    // console.log(data)
   }
+
+  // Function to draw image data on canvas
+  function drawImageOnCanvas(imageDataArray, width, height) {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    canvas.width = width
+    canvas.height = height
+    const ctx = canvas.getContext('2d')
+    
+    // Create ImageData object from the array
+    const imageData = new ImageData(imageDataArray, width, height)
+    
+    // Draw the image data on canvas
+    ctx.putImageData(imageData, 0, 0)
+  }
+
+
+
 
   return (
     <>
@@ -144,14 +183,7 @@ function App() {
                   
                   onChange={(e)=>{ console.log(e.target.files[0]); setFileInput(e.target.files[0])}}
                   />
-              </div>
-
-              {
-                fileInput &&
-                <div className="bg-gray-200 my-4 overflow-x-auto overflow-y-auto max-h-sm">
-                  <canvas id="canvas" width={fileInput.width} height={fileInput.height}></canvas>
-                </div>
-              }
+              </div>              
 
               <button 
               className="text-blue-500 border-1 border-blue-500 py-2 px-4 rounded-xl cursor-pointer hover:bg-blue-50"
@@ -159,6 +191,14 @@ function App() {
                 Reduce Image 
               </button>
             </form>
+
+            {
+              fileInput &&
+              <div className="bg-gray-200 my-4 overflow-x-auto overflow-y-auto max-h-sm">
+                <canvas id="canvas" ref={canvasRef} width={fileInput.width} height={fileInput.height}></canvas>
+              </div>
+            }
+
           </div>
       </div>
     </>

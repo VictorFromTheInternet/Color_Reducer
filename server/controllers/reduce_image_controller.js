@@ -1,6 +1,7 @@
 import fs from 'fs/promises'
 import {createCanvas, loadImage} from 'canvas'
 import {hexToRgb, closestColor} from './color_utility.js' 
+import { Buffer } from 'node:buffer'
 
 
 async function reduceImageController(req, res){
@@ -39,11 +40,15 @@ async function reduceImageController(req, res){
             
             // console.log(`${newR}, ${newG}, ${newB}, ${newA}`)
             // console.log("Closest color:",closestColor(colors, R, G, B))            
-        }
+        }        
 
         // create or store new image, send to client
         // console.log(imageData)        
-        res.status(200).send({"imageData": imageData})
+        res.status(200).send({
+            "imageData": Buffer.from(imageData),
+            "height": height,
+            "width":width
+        })
              
         
     }catch(err){
