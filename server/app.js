@@ -13,6 +13,7 @@ const __dirname = path.dirname(__filename)
 const PORT = process.env.PORT || 5000
 const corsOptions = {
   origin: [
+    'https://color-reducer.onrender.com',
     'http://localhost:5173', 
     'http://127.0.0.1:5173', 
     'https://35.160.120.126',
