@@ -53,13 +53,13 @@ async function reduceImageController(req, res){
 
         // clean up 
         await fs.unlink(filePath)
-        console.log(`Deleted file: ${filePath}`)
+        // console.log(`Deleted file: ${filePath}`)
         
     }catch(err){
         console.error(err)
         res.status(500).send({message:"error uploading file"})
         await fs.unlink(filePath)
-        console.log(`Deleted file: ${filePath}`)
+        // console.log(`Deleted file: ${filePath}`)
     }
     
 }
