@@ -4,17 +4,18 @@ import {hexToRgb, closestColor} from './color_utility.js'
 import { Buffer } from 'node:buffer'
 
 
-async function reduceImageController(req, res){
+async function reduceImageController(req, res){    
 
     try{        
         // init image
         const filePath = req.file.path
         const image = await loadImage(filePath)
-        const height = image.height
-        const width = image.width
+
+        const height = await image.height
+        const width = await image.width        
 
         // init canvas
-        const canvas = createCanvas(height, width)
+        const canvas = createCanvas(width, height)
         const ctx = canvas.getContext('2d')
         ctx.drawImage(image, 0,0)
 
@@ -43,7 +44,7 @@ async function reduceImageController(req, res){
         }        
 
         // create or store new image, send to client
-        // console.log(imageData)        
+        console.log(imageData)        
         res.status(200).send({
             "imageData": Buffer.from(imageData),
             "height": height,

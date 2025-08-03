@@ -7,7 +7,7 @@ function App() {
 
   const [colorInputs, setColorInputs] = useState([])
   const [numColors, setNumColors] = useState(1)
-  const [fileInput, setFileInput]  = useState('')
+  const [fileInput, setFileInput]  = useState(null)
   const [processedImageData, setProcessedImageData] = useState()
   const canvasRef = useRef()
   
@@ -37,6 +37,23 @@ function App() {
     }
   }
   
+
+  // handle image input
+  function handleImageInput(e){
+    console.log(e.target.files[0]); 
+    setFileInput(e.target.files[0])
+
+    const imageUrl = URL.createObjectURL(e.target.files[0])
+    const img = new Image();
+
+    img.onload = () =>{
+      drawOriginalImageOnCanvas(img)
+      URL.revokeObjectURL(imageUrl)
+    }
+    
+    
+    img.src = imageUrl
+  }
   
 
   // submit
@@ -80,7 +97,10 @@ function App() {
     formData.append('inputImage', fileInput)
 
     try{
-      const url = `https://color-reducer-server.onrender.com/color-reducer-api/reduce-image`
+      const ENV = import.meta.env.ENV
+      const url = (ENV === 'production') ? 
+          `https://color-reducer-server.onrender.com/color-reducer-api/reduce-image` :
+          'http://localhost:5000/color-reducer-api/reduce-image'
       const options = {
         method: 'POST',      
         body: formData
@@ -103,7 +123,7 @@ function App() {
     // console.log(data)
   }
 
-  // Function to draw image data on canvas
+  // Function to draw image data on canvas (buffer data)
   function drawImageOnCanvas(imageDataArray, width, height) {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -118,6 +138,20 @@ function App() {
     // Draw the image data on canvas
     ctx.putImageData(imageData, 0, 0)
   }
+
+  // funtion to draw image on canvas (jpg)
+  function drawOriginalImageOnCanvas(img){
+    const canvas = canvasRef.current
+    if(!canvas) return
+
+    canvas.width = img.width
+    canvas.height = img.height
+
+    const ctx = canvas.getContext("2d")
+    ctx.clearRect(0,0,canvas.width, canvas.height)
+    ctx.drawImage(img,0,0)
+  }
+
 
 
 
@@ -174,7 +208,7 @@ function App() {
                       hover:file:cursor-pointer hover:file:bg-blue-50
                       hover:file:text-blue-500"
                   
-                  onChange={(e)=>{ console.log(e.target.files[0]); setFileInput(e.target.files[0])}}
+                  onChange={(e)=>{ handleImageInput(e)}}
                   />
               </div>              
 
