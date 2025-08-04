@@ -160,60 +160,64 @@ function App() {
     <>
       {/* <h1>Color Reducer!</h1> */}
 
-      <div className="main-container  ml-auto mr-auto min-h-screen flex flex-col justify-center items-center">
-          <div className="card p-4 rounded-xl bg-white ">
+      <div className="p-0 sm:px-4 sm:py-8 min-h-screen flex flex-col justify-center items-center max-w-[70vw] mx-auto w-[90vw] sm:max-w-[70vw] sm:w-auto">
+          <div className="p-4 sm:p-6 rounded-xl bg-white w-full shadow-lg">
             <form action="">
 
-              <div>
-                <label htmlFor="numColors" className="block">How many colors (1-10):</label>
-                <div className="flex justify-between">
+              <div className="mb-4">
+                <label htmlFor="numColors" className="block text-sm sm:text-base mb-2">How many colors (1-10):</label>
+                <div className="flex justify-between text-xs sm:text-sm text-gray-600 mb-1">
                   <p>1</p>
                   <p>10</p>
                 </div>
-                <div className="flex gap-3 justify-between">
+                <div className="flex gap-3 justify-between items-center">
                   <input 
                   type="range" id="numColors" min="1" max="10" onChange={handleRangeChange} value={numColors} required
-                  className="w-full"
+                  className="flex-1"
                   />
-                  <span>{numColors}</span>
+                  <span className="text-sm sm:text-base font-medium min-w-[2rem] text-center">{numColors}</span>
                 </div>        
               </div>                         
 
-              <div className="mb-3">
-                {
-                  colorInputs.map((elm, ind)=>{
-                    return(
-                      <input type="color" 
-                      key={ind}
-                      id={ind}
-                      value={elm.value} 
-                      onChange={(e)=>{
-                        let newInputs = [...colorInputs ]
-                        newInputs[ind] = e.target.value
-                        setColorInputs(newInputs)
-                      }}/>
-                    )
-                  })
-                }
+              <div className="mb-4">
+                <label className="block text-sm sm:text-base mb-2">Select Colors:</label>
+                <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
+                  {
+                    colorInputs.map((elm, ind)=>{
+                      return(
+                        <input type="color" 
+                        key={ind}
+                        id={ind}
+                        value={elm} 
+                        className="w-full h-10 sm:h-12 rounded-md cursor-pointer border border-gray-300"
+                        onChange={(e)=>{
+                          let newInputs = [...colorInputs ]
+                          newInputs[ind] = e.target.value
+                          setColorInputs(newInputs)
+                        }}/>
+                      )
+                    })
+                  }
+                </div>
               </div>
 
-              <div className="mb-4 max-w-md max-h-md">
-                <label htmlFor="imageUpload" className="block">Upload an Image:</label>
+              <div className="mb-6">
+                <label htmlFor="imageUpload" className="block text-sm sm:text-base mb-2">Upload an Image:</label>
                 <input 
                   type="file" id="imageUpload" name="imageUpload" accept="image/jpeg"  required
-                  className="text-md 
-                      file:mr-5 file:py-1 file:px-3 file:border-[1px] file:rounded-md
-                      file:text-xs file:font-medium
-                      file:bg-stone-50
+                  className="w-full text-sm sm:text-base
+                      file:mr-3 file:py-2 file:px-4 file:border file:rounded-md
+                      file:text-xs sm:file:text-sm file:font-medium
+                      file:bg-stone-50 file:text-gray-700
                       hover:file:cursor-pointer hover:file:bg-blue-50
-                      hover:file:text-blue-500"
-                  
+                      hover:file:text-blue-500 file:transition-colors"
+                
                   onChange={(e)=>{ handleImageInput(e)}}
                   />
               </div>              
 
               <button 
-              className="text-blue-500 border-1 border-blue-500 py-2 px-4 rounded-xl cursor-pointer hover:bg-blue-50"
+              className="w-full sm:w-auto text-blue-500 border border-blue-500 py-3 px-6 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors font-medium text-sm sm:text-base"
               onClick={handleGenerateImage}> 
                 Reduce Image 
               </button>
@@ -221,8 +225,14 @@ function App() {
 
             {
               fileInput &&
-              <div className="canvas-container bg-gray-200 my-4 overflow-x-auto overflow-y-auto max-h-sm ">
-                <canvas id="canvas" ref={canvasRef} width={fileInput.width} height={fileInput.height}></canvas>
+              <div className="bg-gray-200 my-4 p-4 rounded-lg max-w-full overflow-auto max-w-[70vw] max-h-[50vh]">
+                <canvas 
+                  id="canvas" 
+                  ref={canvasRef} 
+                  className="max-w-full h-auto"
+                  width={fileInput.width} 
+                  height={fileInput.height}
+                ></canvas>
               </div>
             }
 

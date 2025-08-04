@@ -6,9 +6,11 @@ html,body{
         );
 }
 
-
+/* 
 .main-container{
   max-width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 .card{
   width: 100%;
@@ -24,7 +26,7 @@ html,body{
 
 @media (max-width: 480px) {
   .main-container{
-    max-width:90vw;    
+    width:90vw;    
   }
-}
+} */
 
