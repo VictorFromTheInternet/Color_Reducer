@@ -160,8 +160,8 @@ function App() {
     <>
       {/* <h1>Color Reducer!</h1> */}
 
-      <div className="main-container  max-w-lg ml-auto mr-auto min-h-screen flex flex-col justify-center items-center">
-          <div className="p-4 rounded-xl bg-white min-w-full">
+      <div className="main-container  ml-auto mr-auto min-h-screen flex flex-col justify-center items-center">
+          <div className="card p-4 rounded-xl bg-white ">
             <form action="">
 
               <div>
@@ -197,7 +197,7 @@ function App() {
                 }
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 max-w-md max-h-md">
                 <label htmlFor="imageUpload" className="block">Upload an Image:</label>
                 <input 
                   type="file" id="imageUpload" name="imageUpload" accept="image/jpeg"  required
@@ -221,7 +221,7 @@ function App() {
 
             {
               fileInput &&
-              <div className="bg-gray-200 my-4 overflow-x-auto overflow-y-auto max-h-sm">
+              <div className="canvas-container bg-gray-200 my-4 overflow-x-auto overflow-y-auto max-h-sm ">
                 <canvas id="canvas" ref={canvasRef} width={fileInput.width} height={fileInput.height}></canvas>
               </div>
             }

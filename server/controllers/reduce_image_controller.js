@@ -44,7 +44,7 @@ async function reduceImageController(req, res){
         }        
 
         // create or store new image, send to client
-        console.log(imageData)        
+        // console.log(imageData)        
         res.status(200).send({
             "imageData": Buffer.from(imageData),
             "height": height,
