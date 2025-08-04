@@ -97,10 +97,12 @@ function App() {
     formData.append('inputImage', fileInput)
 
     try{
-      const ENV = import.meta.env.ENV
-      const url = (ENV === 'production') ? 
-          `https://color-reducer-server.onrender.com/color-reducer-api/reduce-image` :
-          'http://localhost:5000/color-reducer-api/reduce-image'
+      const ENV = import.meta.env.MODE 
+      console.log(ENV)
+      const url = (ENV == 'development') ? 
+          'http://localhost:5000/color-reducer-api/reduce-image' :
+          `https://color-reducer-server.onrender.com/color-reducer-api/reduce-image`
+          
       const options = {
         method: 'POST',      
         body: formData
