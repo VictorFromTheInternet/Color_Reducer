@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import LoadingSpinner from './components/LoadingSpinner'
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
   const [numColors, setNumColors] = useState(1)
   const [fileInput, setFileInput]  = useState(null)
   const [processedImageData, setProcessedImageData] = useState()
+  const [isLoading, setIsLoading] = useState(false)
   const canvasRef = useRef()
   
 
@@ -64,6 +66,7 @@ function App() {
   // generate image
   async function handleGenerateImage(e){
     e.preventDefault()
+    setIsLoading(true)
 
     // Check if form is valid using HTML5 validation
     const form = e.target.closest('form')
@@ -97,8 +100,7 @@ function App() {
     formData.append('inputImage', fileInput)
 
     try{
-      const ENV = import.meta.env.MODE 
-      console.log(ENV)
+      const ENV = import.meta.env.MODE       
       const url = (ENV == 'development') ? 
           'http://localhost:5000/color-reducer-api/reduce-image' :
           `https://color-reducer-server.onrender.com/color-reducer-api/reduce-image`
@@ -118,6 +120,8 @@ function App() {
       drawImageOnCanvas(imageData, data.width, data.height)
     }catch(err){
       console.error(err)
+    }finally{
+      setIsLoading(false)
     }
 
 
@@ -219,9 +223,10 @@ function App() {
               </div>              
 
               <button 
-              className="w-full sm:w-auto text-blue-500 border border-blue-500 py-3 px-6 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors font-medium text-sm sm:text-base"
-              onClick={handleGenerateImage}> 
-                Reduce Image 
+              className="flex gap-2 items-center w-full sm:w-auto text-blue-500 border border-blue-500 py-3 px-6 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors font-medium text-sm sm:text-base"
+              onClick={handleGenerateImage} disabled={isLoading}> 
+                {isLoading && <LoadingSpinner/>}
+                {isLoading ? 'Loading ...':'Reduce Image'}
               </button>
             </form>
 
