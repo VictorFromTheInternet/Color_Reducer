@@ -223,7 +223,7 @@ function App() {
               </div>              
 
               <button 
-              className="flex gap-2 items-center w-full sm:w-auto text-blue-500 border border-blue-500 py-3 px-6 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors font-medium text-sm sm:text-base"
+              className="flex gap-2 items-center justify-center w-full sm:w-auto text-blue-500 border border-blue-500 py-3 px-6 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors font-medium text-sm sm:text-base"
               onClick={handleGenerateImage} disabled={isLoading}> 
                 {isLoading && <LoadingSpinner/>}
                 {isLoading ? 'Loading ...':'Reduce Image'}
