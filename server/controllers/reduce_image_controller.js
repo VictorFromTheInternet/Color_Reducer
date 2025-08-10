@@ -11,33 +11,44 @@ async function reduceImageController(req, res){
         const filePath = req.file.path
         const image = await loadImage(filePath)
 
-        const height = await image.height
-        const width = await image.width        
+        const height = image.height
+        const width = image.width        
 
         // init canvas
         const canvas = createCanvas(width, height)
         const ctx = canvas.getContext('2d')
         ctx.drawImage(image, 0,0)
 
+        // get selected colors
+        const colors = req.body.colors.split(',')   
+
         // get pixel array
-        const imageData = ctx.getImageData(0,0,width, height, {
+        let imageData = ctx.getImageData(0,0,width, height, {
             colorSpace: 'srgb'            
         }).data
-
-
-        // round values        
-        const colors = req.body.colors.split(',')        
+        
+        // create reference Map / stack           
+        let refSet = new Map()             
+    
+        // O(N)/4 ish - assign rounded values
         for(let i=0; i<imageData.length; i+=4){
             let R = imageData[i]
             let G = imageData[i+1]
             let B = imageData[i+2]
-            let A = imageData[i+3]            
+            let A = imageData[i+3]        
 
-            const [newR, newG, newB, newA] = hexToRgb(closestColor(colors, R,G,B))            
+            let newColor = []
             
-            imageData[i] = newR
-            imageData[i+1] = newG
-            imageData[i+2] = newB
+            if(refSet.has(`rgba(${R},${G},${B},${A})`)){
+                newColor = refSet.get(`rgba(${R},${G},${B},${A})`)
+            }else{
+                newColor = hexToRgb(closestColor(colors, R,G,B))
+                refSet.set(`rgba(${R},${G},${B},${A})`, newColor)
+            }                    
+            
+            imageData[i] = newColor[0]
+            imageData[i+1] = newColor[1]
+            imageData[i+2] = newColor[2]
             
             // console.log(`${newR}, ${newG}, ${newB}, ${newA}`)
             // console.log("Closest color:",closestColor(colors, R, G, B))            
